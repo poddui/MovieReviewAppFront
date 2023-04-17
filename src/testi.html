@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Rating list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+     <link type="text/css" rel="stylesheet" href="/css/styles.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+	<div class="col-md-4">
+		<h1>Manage Ratings</h1>
+	</div>
+	<div class="col-md-4">
+		<h3>Logged in as: <span sec:authentication="name"></span></h3>
+	</div>
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>  
+       <table class="table table-striped">
+               <tr>
+               <td><b>Movie name</b></td>
+               <td><b>Release Year</b></td>
+               <td><b>Director</b></td>
+               <td><b>Category</b></td>
+               <td><b>Rating by</b></td>
+               <td><b>Rating</b></td>
+               <td><b></b></td> 
+               		<th sec:authorize="hasAuthority('ADMIN')"> </th>
+              </tr>
+              <th:block th:with="arvo='${sec.authentication}'">
+               <tr th:each = "review : ${reviews}">
+               <td th:text= "${review.name}"></td>
+               <td th:text= "${review.release_year}"></td>
+               <td th:text= "${review.director}"></td>
+               <td th:text= "${review.category.name}"></td>
+               <td th:text= "${review.user.username}"></td>
+               <td th:text= "${review.rating} + ' / 10'"></td>
+               <td></td>
+               <th:block th:if="${arvo == review.user.username}">
+                <a th:href="@{/delete/{id}(id=${review.id})}" class="btn btn-danger" id="delButton">Delete</a>
+                </th:block>
+                </th:block>
+               <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${review.id})}" class="btn btn-danger" id="delButton">Delete</a></td>
+            </tr>
+       </table>
+       <a href="/addreview" class="btn btn-success">Add Review</a>
+       <a href="/editreview" class="btn btn-primary">Edit Review</a>
+</div>
+</body>
+</html>

@@ -122,7 +122,7 @@ function App() {
     <div id="bar">
       <h1 id="h1" >Movie reviews</h1>
       <div id="buttondiv">
-        <Button variant="contained" color="success" onClick={() => {window.location.replace('http://localhost:8080/');}}>Log in</Button>
+        <Button variant="contained" color="success" onClick={() => {window.location.replace('https://moviereviewapp-7rje.onrender.com/');}}>Log in</Button>
       </div>
         <ThemeProvider theme={theme}>
         <TableContainer component={Paper}>
